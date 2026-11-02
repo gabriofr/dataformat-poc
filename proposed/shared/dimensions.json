@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "comment": "Shared dimension registry. Dimensions are filter/grouping axes with stable IDs, referenced by every indicator bundle. Labels are BCP 47 keyed (nb/en).",
+  "dimensions": [
+    {
+      "id": "year",
+      "type": "ordinal",
+      "name": { "nb": "År", "en": "Year" },
+      "values": [
+        { "value": 2019, "label": { "nb": "2019", "en": "2019" } },
+        { "value": 2020, "label": { "nb": "2020", "en": "2020" } },
+        { "value": 2021, "label": { "nb": "2021", "en": "2021" } },
+        { "value": 2022, "label": { "nb": "2022", "en": "2022" } },
+        { "value": 2023, "label": { "nb": "2023", "en": "2023" } },
+        { "value": 2024, "label": { "nb": "2024", "en": "2024" } },
+        { "value": 2025, "label": { "nb": "2025", "en": "2025" } }
+      ]
+    },
+    {
+      "id": "kjonn",
+      "type": "nominal",
+      "name": { "nb": "Kjønn", "en": "Sex" },
+      "values": [
+        { "value": "menn", "label": { "nb": "Menn", "en": "Men" } },
+        { "value": "kvinner", "label": { "nb": "Kvinner", "en": "Women" } },
+        { "value": "begge", "label": { "nb": "Begge kjønn", "en": "Both sexes" } }
+      ]
+    },
+    {
+      "id": "alder",
+      "type": "quantitative",
+      "name": { "nb": "Alder", "en": "Age" },
+      "range": [0, 110]
+    },
+    {
+      "id": "measure",
+      "type": "nominal",
+      "name": { "nb": "Måleenhet", "en": "Measurement" },
+      "comment": "Selects which precomputed measure field of an observation is displayed. Values are declared per indicator in its `measures` section; this dimension only defines the concept.",
+      "values": [
+        { "value": "rate", "label": { "nb": "Rate", "en": "Rate" } },
+        { "value": "n", "label": { "nb": "Antall", "en": "Count" } },
+        { "value": "andel", "label": { "nb": "Andel", "en": "Proportion" } }
+      ]
+    }
+  ]
+}

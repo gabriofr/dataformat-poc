@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0",
+  "comment": "Shared category registry. Categories have stable IDs, localized names and explicit parentId hierarchy. IMPORTANT: observations exist at every level (adjusted rates cannot be aggregated client-side from children), so each level is a valid query level — `levels` declares the presentation levels a UI can switch between.",
+  "categorySets": [
+    {
+      "id": "geo",
+      "name": { "nb": "Geografi", "en": "Geography" },
+      "levels": [
+        { "id": "nasjonal", "name": { "nb": "Nasjonalt", "en": "National" } },
+        { "id": "rhf", "name": { "nb": "Regionale helseforetak (RHF)", "en": "Regional health authorities" } },
+        { "id": "opptak", "name": { "nb": "Opptaksområder", "en": "Referral areas" } }
+      ],
+      "categories": [
+        { "id": "norge", "level": "nasjonal", "name": { "nb": "Norge", "en": "Norway" } },
+
+        { "id": "helse_nord", "level": "rhf", "parentId": "norge", "name": { "nb": "Helse Nord", "en": "Northern Norway RHA" } },
+        { "id": "helse_midt", "level": "rhf", "parentId": "norge", "name": { "nb": "Helse Midt-Norge", "en": "Central Norway RHA" } },
+        { "id": "helse_vest", "level": "rhf", "parentId": "norge", "name": { "nb": "Helse Vest", "en": "Western Norway RHA" } },
+        { "id": "helse_sorost", "level": "rhf", "parentId": "norge", "name": { "nb": "Helse Sør-Øst", "en": "South-Eastern Norway RHA" } },
+
+        { "id": "finnmark", "level": "opptak", "parentId": "helse_nord", "name": { "nb": "Finnmark", "en": "Finnmark" } },
+        { "id": "unn", "level": "opptak", "parentId": "helse_nord", "name": { "nb": "UNN", "en": "UNN" } },
+        { "id": "nordland", "level": "opptak", "parentId": "helse_nord", "name": { "nb": "Nordlandssykehuset", "en": "Nordland Hospital" } },
+        { "id": "helgeland", "level": "opptak", "parentId": "helse_nord", "name": { "nb": "Helgeland", "en": "Helgeland" } },
+        { "id": "st_olavs", "level": "opptak", "parentId": "helse_midt", "name": { "nb": "St. Olavs", "en": "St. Olavs" } },
+        { "id": "bergen", "level": "opptak", "parentId": "helse_vest", "name": { "nb": "Bergen", "en": "Bergen" } },
+        { "id": "ous", "level": "opptak", "parentId": "helse_sorost", "name": { "nb": "OUS", "en": "OUS" } }
+      ]
+    },
+    {
+      "id": "behandler",
+      "name": { "nb": "Behandler", "en": "Treatment provider" },
+      "levels": [
+        { "id": "detaljert", "name": { "nb": "Detaljert", "en": "Detailed" } }
+      ],
+      "categories": [
+        { "id": "eget_hf", "level": "detaljert", "name": { "nb": "Eget HF", "en": "Local public" } },
+        { "id": "annet_hf", "level": "detaljert", "name": { "nb": "Annet HF", "en": "Other public" } },
+        { "id": "privat", "level": "detaljert", "name": { "nb": "Privat", "en": "Private" } }
+      ]
+    },
+    {
+      "id": "sektor",
+      "name": { "nb": "Sektor", "en": "Sector" },
+      "levels": [
+        { "id": "detaljert", "name": { "nb": "Detaljert", "en": "Detailed" } }
+      ],
+      "categories": [
+        { "id": "somatikk", "level": "detaljert", "name": { "nb": "Somatikk", "en": "Somatic" } },
+        { "id": "ikke_somatikk", "level": "detaljert", "name": { "nb": "Psykiatri", "en": "Psychiatry" } }
+      ]
+    },
+    {
+      "id": "offentlig_privat",
+      "name": { "nb": "Offentlig/privat", "en": "Public/private" },
+      "comment": "Coarser classification than `behandler`; see category-mappings.json.",
+      "levels": [
+        { "id": "grov", "name": { "nb": "Grov", "en": "Coarse" } }
+      ],
+      "categories": [
+        { "id": "offentlig", "level": "grov", "name": { "nb": "Offentlig", "en": "Public" } },
+        { "id": "privat_grov", "level": "grov", "name": { "nb": "Privat", "en": "Private" } }
+      ]
+    }
+  ]
+}

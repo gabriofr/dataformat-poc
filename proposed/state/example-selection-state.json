@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "comment": "Global application state — lives OUTSIDE chart definitions and data (URL/store, never in export files). Selections persist when switching charts/indicators; a chart simply ignores state it does not use. Deviation from the ChatGPT thread: `categories` stores selected IDs at ANY level (Approach A), not expanded leaves, because adjusted rates cannot be aggregated from children — the app resolves parent/child display via the shared hierarchy, including partial-selection rendering.",
+
+  "currentIndicator": "psa_rb1",
+  "currentChart": "rate_geo",
+
+  "dimensions": {
+    "year": 2023,
+    "kjonn": "begge",
+    "measure": "rate"
+  },
+
+  "categories": {
+    "geo": ["helse_nord", "finnmark", "st_olavs"],
+    "behandler": ["eget_hf", "annet_hf"],
+    "sektor": ["ikke_somatikk"]
+  },
+
+  "categoryLevels": {
+    "geo": "opptak",
+    "behandler": "detaljert",
+    "sektor": "detaljert"
+  },
+
+  "time": { "meanOfYears": [2021, 2023] }
+}

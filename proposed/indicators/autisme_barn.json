@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0",
+  "id": "autisme_barn",
+  "generated": "2026-06-23T12:16:40Z",
+  "title": { "nb": "Autisme hos barn", "en": "Autism in children" },
+  "description": {
+    "nb": "Pasienter 0–17 år med autismediagnose i spesialisthelsetjenesten.",
+    "en": "Patients aged 0–17 with an autism diagnosis in specialist healthcare."
+  },
+  "kontaktBegrep": { "nb": "kontakter", "en": "contacts" },
+
+  "dimensionRefs": ["year", "kjonn", "alder", "measure"],
+
+  "measures": [
+    { "id": "pas_n", "measureType": "n", "name": { "nb": "Antall pasienter", "en": "Number of patients" }, "format": ",.0f" },
+    { "id": "pas_rate", "measureType": "rate", "name": { "nb": "Pasienter pr. 1000 innbyggere", "en": "Patients per 1000 inhabitants" }, "format": ",.1f", "adjusted": true },
+    { "id": "kont_n", "measureType": "n", "name": { "nb": "Antall kontakter", "en": "Number of contacts" }, "format": ",.0f" },
+    { "id": "kont_rate", "measureType": "rate", "name": { "nb": "Kontakter pr. 1000 innbyggere", "en": "Contacts per 1000 inhabitants" }, "format": ",.1f", "adjusted": true },
+    { "id": "population", "measureType": "n", "name": { "nb": "Befolkning", "en": "Population" }, "format": ",.0f" }
+  ],
+
+  "charts": [
+    {
+      "id": "total",
+      "type": "bar",
+      "title": { "nb": "Enkeltår", "en": "Single year" },
+      "dataset": "hovedtall",
+      "dimensions": ["year", "measure"],
+      "categorySets": { "geo": { "defaultLevel": "rhf" } },
+      "encoding": {
+        "x": { "measureDimension": "measure", "measureOptions": { "rate": "pas_rate", "n": "pas_n" } },
+        "y": { "categorySet": "geo" }
+      },
+      "axisLabels": {
+        "x": { "nb": "Pasienter pr. 1000 innbyggere", "en": "Patients per 1000 inhabitants" },
+        "y": { "nb": "Opptaksområder", "en": "Referral areas" }
+      }
+    },
+    {
+      "id": "behandler",
+      "type": "bar",
+      "subtype": "stacked",
+      "title": { "nb": "Behandler", "en": "Public/private" },
+      "dataset": "hovedtall",
+      "dimensions": ["year", "measure"],
+      "categorySets": {
+        "geo": { "defaultLevel": "rhf" },
+        "behandler": { "role": "series" }
+      },
+      "encoding": {
+        "x": { "measureDimension": "measure", "measureOptions": { "rate": "kont_rate", "n": "kont_n" } },
+        "y": { "categorySet": "geo" },
+        "series": { "categorySet": "behandler" }
+      }
+    },
+    {
+      "id": "sektor",
+      "type": "bar",
+      "subtype": "stacked",
+      "title": { "nb": "Sektor", "en": "Sector" },
+      "dataset": "hovedtall",
+      "dimensions": ["year", "measure"],
+      "categorySets": {
+        "geo": { "defaultLevel": "rhf" },
+        "sektor": { "role": "series" }
+      },
+      "encoding": {
+        "x": { "measureDimension": "measure", "measureOptions": { "rate": "kont_rate", "n": "kont_n" } },
+        "y": { "categorySet": "geo" },
+        "series": { "categorySet": "sektor" }
+      }
+    },
+    {
+      "id": "demografi",
+      "type": "line",
+      "title": { "nb": "Demografi", "en": "Demographics" },
+      "dataset": "demografi",
+      "dimensions": ["year", "kjonn"],
+      "encoding": {
+        "x": { "dimension": "alder" },
+        "y": { "measure": "pas_n" },
+        "series": { "dimension": "kjonn", "colors": { "menn": "#74A5CD", "kvinner": "#E495A5" } }
+      },
+      "axisLabels": {
+        "x": { "nb": "Alder", "en": "Age" },
+        "y": { "nb": "Antall pasienter", "en": "Number of patients" }
+      }
+    }
+  ],
+
+  "datasets": [
+    {
+      "id": "hovedtall",
+      "comment": "Tidy observations. `geo` references the shared geo category set and exists at EVERY level (nasjonal/rhf/opptak) because rates are age/sex-adjusted and cannot be aggregated from children. `category` references the set named in `categorySet` (absent = total). Truncated sample.",
+      "observations": [
+        { "geo": "norge", "year": 2023, "values": { "pas_n": 8163, "kont_n": 74357, "pas_rate": 7.34, "kont_rate": 66.856 } },
+        { "geo": "helse_nord", "year": 2023, "values": { "pas_n": 556, "kont_n": 5465, "pas_rate": 6.066, "kont_rate": 59.731 } },
+        { "geo": "helse_vest", "year": 2023, "values": { "pas_n": 1833, "kont_n": 17113, "pas_rate": 7.442, "kont_rate": 69.592 } },
+        { "geo": "helse_sorost", "year": 2023, "values": { "pas_n": 4572, "kont_n": 43537, "pas_rate": 7.333, "kont_rate": 69.847 } },
+        { "geo": "helse_midt", "year": 2023, "values": { "pas_n": 1202, "kont_n": 8242, "pas_rate": 7.984, "kont_rate": 54.677 } },
+        { "geo": "finnmark", "year": 2023, "values": { "pas_n": 71, "kont_n": 702, "pas_rate": 5.1, "kont_rate": 50.9 } },
+
+        { "geo": "helse_nord", "year": 2023, "categorySet": "behandler", "category": "eget_hf", "values": { "kont_n": 4890, "kont_rate": 53.4 } },
+        { "geo": "helse_nord", "year": 2023, "categorySet": "behandler", "category": "annet_hf", "values": { "kont_n": 312, "kont_rate": 3.4 } },
+        { "geo": "helse_nord", "year": 2023, "categorySet": "behandler", "category": "privat", "values": { "kont_n": 263, "kont_rate": 2.9 } },
+
+        { "geo": "helse_nord", "year": 2023, "categorySet": "sektor", "category": "somatikk", "values": { "kont_n": 1210, "kont_rate": 13.2 } },
+        { "geo": "helse_nord", "year": 2023, "categorySet": "sektor", "category": "ikke_somatikk", "values": { "kont_n": 4255, "kont_rate": 46.5 } }
+      ]
+    },
+    {
+      "id": "demografi",
+      "comment": "Age/sex distribution per year. Truncated sample.",
+      "observations": [
+        { "year": 2023, "alder": 4, "kjonn": "menn", "values": { "pas_n": 455, "population": 27210 } },
+        { "year": 2023, "alder": 4, "kjonn": "kvinner", "values": { "pas_n": 149, "population": 25803 } },
+        { "year": 2023, "alder": 5, "kjonn": "menn", "values": { "pas_n": 505, "population": 28033 } },
+        { "year": 2023, "alder": 5, "kjonn": "kvinner", "values": { "pas_n": 143, "population": 26544 } },
+        { "year": 2023, "alder": 17, "kjonn": "menn", "values": { "pas_n": 318, "population": 32017 } },
+        { "year": 2023, "alder": 17, "kjonn": "kvinner", "values": { "pas_n": 336, "population": 30228 } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "comment": "Explicit, curated mappings between category sets. Used to translate a selection when the user switches to a chart with a different classification. Never inferred from names. `mapping` keys are category IDs in `from`, values are the corresponding category IDs in `to`. Unmapped selections are retained in state, not deleted.",
+  "mappings": [
+    {
+      "from": "behandler",
+      "to": "offentlig_privat",
+      "mapping": {
+        "eget_hf": ["offentlig"],
+        "annet_hf": ["offentlig"],
+        "privat": ["privat_grov"]
+      }
+    }
+  ]
+}

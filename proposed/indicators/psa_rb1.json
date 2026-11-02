@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.0",
+  "id": "psa_rb1",
+  "generated": "2026-06-23T12:16:40Z",
+  "title": { "nb": "PSA-prøver", "en": "PSA tests" },
+  "description": {
+    "nb": "PSA-prøver pr. 1000 menn, og andel prøver tatt med kortere intervall enn anbefalt.",
+    "en": "PSA tests per 1000 men, and proportion of tests repeated earlier than the recommended interval."
+  },
+
+  "dimensionRefs": ["year", "alder", "measure"],
+
+  "measures": [
+    { "id": "psa_rate", "measureType": "rate", "name": { "nb": "Antall PSA-prøver pr. 1000 menn", "en": "Number of PSA tests per 1000 men" }, "format": ",.0f", "adjusted": true },
+    { "id": "andel_int", "measureType": "andel", "name": { "nb": "Andel PSA-prøver tatt med kortere intervall enn anbefalt", "en": "Proportion of PSA tests repeated earlier than recommended interval" }, "format": ",.0%", "adjusted": true },
+    { "id": "andel_priv", "measureType": "andel", "name": { "nb": "Andel i privat regi", "en": "Proportion privately provided" }, "format": ",.0%" },
+    { "id": "tot_events", "measureType": "n", "name": { "nb": "Antall prøver", "en": "Number of tests" }, "format": ",.0f" },
+    { "id": "tot_pas", "measureType": "n", "name": { "nb": "Antall menn", "en": "Number of men" }, "format": ",.0f" },
+    { "id": "prove_pr_pas", "measureType": "rate", "name": { "nb": "Prøver pr. mann", "en": "Tests per man" }, "format": ",.1f" },
+    { "id": "pct_andel", "measureType": "andel", "name": { "nb": "Andel av befolkningen som fikk tatt PSA-prøve", "en": "Proportion of population that received PSA test" }, "format": ",.0%" }
+  ],
+
+  "charts": [
+    {
+      "id": "rate_geo",
+      "type": "bar",
+      "title": { "nb": "PSA-prøver pr. 1000 menn", "en": "PSA tests per 1000 men" },
+      "dataset": "hovedtall",
+      "dimensions": ["year"],
+      "comment": "Replaces BOTH `datasett_1` (area) and `datasett_2` (borhf) bar charts in the old export — same data, two presentation levels of the shared geo set. The yearly values (old tot2021/tot2022/tot2023 columns) are now plain year-dimension filters; the period mean is a timeAgg row.",
+      "categorySets": { "geo": { "defaultLevel": "opptak", "levels": ["rhf", "opptak"] } },
+      "encoding": {
+        "x": { "measure": "psa_rate" },
+        "y": { "categorySet": "geo" }
+      },
+      "defaultTime": { "meanOfYears": [2021, 2023] }
+    },
+    {
+      "id": "andel_intervall",
+      "type": "bar",
+      "title": { "nb": "Kortere intervall enn anbefalt", "en": "Shorter interval than recommended" },
+      "dataset": "hovedtall",
+      "dimensions": ["year"],
+      "categorySets": { "geo": { "defaultLevel": "opptak", "levels": ["rhf", "opptak"] } },
+      "encoding": {
+        "x": { "measure": "andel_int" },
+        "y": { "categorySet": "geo" }
+      },
+      "defaultTime": { "meanOfYears": [2020, 2022] }
+    },
+    {
+      "id": "alder_fordeling",
+      "type": "line",
+      "title": { "nb": "Andel testet etter alder", "en": "Proportion tested by age" },
+      "dataset": "alder",
+      "dimensions": [],
+      "encoding": {
+        "x": { "dimension": "alder" },
+        "y": { "measure": "pct_andel" },
+        "series": { "constant": { "nb": "Menn", "en": "Men" }, "color": "#74A5CD" }
+      }
+    },
+    {
+      "id": "kart",
+      "type": "map",
+      "title": { "nb": "Kart", "en": "Map" },
+      "dataset": "hovedtall",
+      "dimensions": [],
+      "categorySets": { "geo": { "defaultLevel": "opptak", "levels": ["opptak"] } },
+      "encoding": { "value": { "measure": "psa_rate" } },
+      "defaultTime": { "meanOfYears": [2021, 2023] },
+      "caption": { "nb": "Antall PSA-prøver pr. 1000 menn", "en": "Number of PSA tests pr. 1000 men" },
+      "classification": {
+        "method": "jenks",
+        "breaks": [304.393500352, 392.940904346, 475.740599723]
+      }
+    },
+    {
+      "id": "tabell",
+      "type": "table",
+      "title": { "nb": "Tabell", "en": "Table" },
+      "dataset": "hovedtall",
+      "dimensions": [],
+      "categorySets": { "geo": { "defaultLevel": "opptak", "levels": ["rhf", "opptak"] } },
+      "defaultTime": { "meanOfYears": [2021, 2023] },
+      "caption": {
+        "nb": "Årlige gjennomsnittsverdier for perioden 2021–2023. <br>* Antall pr. 1000 menn. Ratene er aldersjusterte.",
+        "en": "Annual average during 2021–2023. <br>* Rate per 1000 men. Rates are age-adjusted."
+      },
+      "columns": [
+        { "categorySet": "geo" },
+        { "measure": "psa_rate" },
+        { "measure": "andel_int" },
+        { "measure": "andel_priv" },
+        { "measure": "tot_events" },
+        { "measure": "tot_pas" },
+        { "measure": "prove_pr_pas" }
+      ]
+    }
+  ],
+
+  "datasets": [
+    {
+      "id": "hovedtall",
+      "comment": "Tidy observations at both geo levels. `time` is either {year} or {meanOfYears:[from,to]} — period means are pipeline-computed rows, not client-side aggregates, because rates are adjusted. Truncated sample (real file has 22 opptak + 4 RHF + norge).",
+      "observations": [
+        { "geo": "finnmark", "time": { "year": 2021 }, "values": { "psa_rate": 259.709676687 } },
+        { "geo": "finnmark", "time": { "year": 2022 }, "values": { "psa_rate": 278.947265457 } },
+        { "geo": "finnmark", "time": { "year": 2023 }, "values": { "psa_rate": 278.437482977 } },
+        { "geo": "finnmark", "time": { "meanOfYears": [2021, 2023] }, "values": { "psa_rate": 272.400690241, "andel_priv": 0.015297959734, "tot_events": 6300.66666667, "tot_pas": 4154.33333333, "prove_pr_pas": 1.51666 } },
+        { "geo": "finnmark", "time": { "meanOfYears": [2020, 2022] }, "values": { "andel_int": 0.179355257349 } },
+        { "geo": "finnmark", "time": { "year": 2020 }, "values": { "andel_int": 0.177687427127 } },
+        { "geo": "finnmark", "time": { "year": 2021 }, "values": { "andel_int": 0.173223419203 } },
+        { "geo": "finnmark", "time": { "year": 2022 }, "values": { "andel_int": 0.186665063281 } },
+
+        { "geo": "helse_nord", "time": { "year": 2021 }, "values": { "psa_rate": 324.72369502 } },
+        { "geo": "helse_nord", "time": { "year": 2022 }, "values": { "psa_rate": 325.947373127 } },
+        { "geo": "helse_nord", "time": { "year": 2023 }, "values": { "psa_rate": 320.39736514 } },
+        { "geo": "helse_nord", "time": { "meanOfYears": [2021, 2023] }, "values": { "psa_rate": 323.640978583, "andel_priv": 0.0762830099591, "tot_events": 49826.6666667, "tot_pas": 33006.3333333, "prove_pr_pas": 1.50960926691 } }
+      ]
+    },
+    {
+      "id": "alder",
+      "comment": "Proportion tested by single-year age. Truncated sample (real file has ages 0–95).",
+      "observations": [
+        { "alder": 40, "values": { "pct_andel": 0.021 } },
+        { "alder": 50, "values": { "pct_andel": 0.094 } },
+        { "alder": 60, "values": { "pct_andel": 0.221 } },
+        { "alder": 70, "values": { "pct_andel": 0.334 } },
+        { "alder": 80, "values": { "pct_andel": 0.303 } }
+      ]
+    }
+  ]
+}
